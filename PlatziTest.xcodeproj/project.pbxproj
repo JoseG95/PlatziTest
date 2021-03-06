@@ -99,6 +99,7 @@
 		BFB6E5B425F3067500DC5F4F /* PlatziTest */ = {
 			isa = PBXGroup;
 			children = (
+				BFE0C55625F3262800770565 /* Networking */,
 				BFE0C54D25F3237F00770565 /* Model */,
 				BFB6E5B525F3067500DC5F4F /* AppDelegate.swift */,
 				BFB6E5B725F3067500DC5F4F /* SceneDelegate.swift */,
@@ -134,6 +135,13 @@
 				BFE0C54E25F3238E00770565 /* MovieModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BFE0C55625F3262800770565 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
