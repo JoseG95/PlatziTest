@@ -12,6 +12,8 @@ class PopularMovieTableViewCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = Colors.primaryWhite
+        label.font = Fonts.bodyOne
         return label
     }()
     

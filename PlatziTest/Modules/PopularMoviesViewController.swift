@@ -12,6 +12,7 @@ class PopularMoviesViewController: UIViewController {
     private let popularMoviesTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(PopularMovieTableViewCell.self, forCellReuseIdentifier: PopularMovieTableViewCell.identifier)
+        tableView.backgroundColor = Colors.background
         return tableView
     }()
     
@@ -22,7 +23,7 @@ class PopularMoviesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.background
         viewModelDidLoad()
     }
     
@@ -47,9 +48,8 @@ extension PopularMoviesViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 93
     }
-    
 }
 
 private extension PopularMoviesViewController {
