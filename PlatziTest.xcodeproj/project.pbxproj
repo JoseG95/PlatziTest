@@ -15,6 +15,7 @@
 		BFB6E5CD25F3067600DC5F4F /* PlatziTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6E5CC25F3067600DC5F4F /* PlatziTestTests.swift */; };
 		BFB6E5D825F3067600DC5F4F /* PlatziTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6E5D725F3067600DC5F4F /* PlatziTestUITests.swift */; };
 		BFE0C54F25F3238E00770565 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE0C54E25F3238E00770565 /* MovieModel.swift */; };
+		BFE0C55825F327AF00770565 /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE0C55725F327AF00770565 /* NetworkServices.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		BFB6E5D725F3067600DC5F4F /* PlatziTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatziTestUITests.swift; sourceTree = "<group>"; };
 		BFB6E5D925F3067600DC5F4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFE0C54E25F3238E00770565 /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
+		BFE0C55725F327AF00770565 /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 		BFE0C55625F3262800770565 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				BFE0C55725F327AF00770565 /* NetworkServices.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFE0C55825F327AF00770565 /* NetworkServices.swift in Sources */,
 				BFE0C54F25F3238E00770565 /* MovieModel.swift in Sources */,
 				BFB6E5BA25F3067500DC5F4F /* ViewController.swift in Sources */,
 				BFB6E5B625F3067500DC5F4F /* AppDelegate.swift in Sources */,

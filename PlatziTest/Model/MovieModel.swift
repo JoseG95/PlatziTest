@@ -7,8 +7,6 @@
 
 import Foundation
 
-var appiKey = "7d93b0bb995db9da3c4cbd3c8164cf41"
-
 struct Movie: Decodable {
     let id: Int
     let title: String
