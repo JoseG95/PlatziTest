@@ -7,6 +7,19 @@
 
 import Foundation
 
+struct MoviesPage: Decodable {
+    let page: Int
+    let results: [Movie]
+    let totalResults: Int
+    let totalPages: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case page, results
+        case totalResults = "total_results"
+        case totalPages = "total_pages"
+    }
+}
+
 struct Movie: Decodable {
     let id: Int
     let title: String
