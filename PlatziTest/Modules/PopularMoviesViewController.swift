@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PopularMoviesViewController.swift
 //  PlatziTest
 //
 //  Created by Jose Gutierrez on 05/03/21.
@@ -7,16 +7,23 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class PopularMoviesViewController: UIViewController {
     
-    let popularMoviesTableView = UITableView()
+    private let popularMoviesTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "popularMovieCell")
+        return tableView
+    }()
     
-    var movies = ["Movie1", "Movie2", "Movie3", "Movie4"]
+    lazy var viewModel: PopularMoviesViewModel = {
+        return PopularMoviesViewModel()
+    }()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        viewModelDidLoad()
     }
     
     override func loadView() {
@@ -25,19 +32,30 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension PopularMoviesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        movies.count
+        viewModel.numberOfCells
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "popularMovieCell", for: indexPath)
-        cell.textLabel?.text = movies[indexPath.row]
+        let cellViewModel = viewModel.getCellViewModel(at: indexPath)
+        cell.textLabel?.text = cellViewModel.title
         return cell
     }
 }
 
-private extension ViewController {
+private extension PopularMoviesViewController {
+    
+    func viewModelDidLoad() {
+        viewModel.reloadTableViewClosure = { [weak self] () in
+            DispatchQueue.main.async {
+                self?.popularMoviesTableView.reloadData()
+            }
+        }
+        viewModel.didLoad()
+    }
+    
     func setupTableViewConstraints() {
         view.addSubview(popularMoviesTableView)
         popularMoviesTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +69,6 @@ private extension ViewController {
     
     func setupTableView() {
         popularMoviesTableView.dataSource = self
-        popularMoviesTableView.register(UITableViewCell.self, forCellReuseIdentifier: "popularMovieCell")
         setupTableViewConstraints()
     }
 }
