@@ -11,7 +11,7 @@ class PopularMoviesViewController: UIViewController {
     
     private let popularMoviesTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "popularMovieCell")
+        tableView.register(PopularMovieTableViewCell.self, forCellReuseIdentifier: PopularMovieTableViewCell.identifier)
         return tableView
     }()
     
@@ -32,17 +32,24 @@ class PopularMoviesViewController: UIViewController {
     }
 }
 
-extension PopularMoviesViewController: UITableViewDataSource {
+extension PopularMoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfCells
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "popularMovieCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularMovieTableViewCell.identifier, for: indexPath) as? PopularMovieTableViewCell else {
+            return UITableViewCell()
+        }
         let cellViewModel = viewModel.getCellViewModel(at: indexPath)
-        cell.textLabel?.text = cellViewModel.title
+        cell.configure(with: cellViewModel)
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    
 }
 
 private extension PopularMoviesViewController {
@@ -69,6 +76,7 @@ private extension PopularMoviesViewController {
     
     func setupTableView() {
         popularMoviesTableView.dataSource = self
+        popularMoviesTableView.delegate = self
         setupTableViewConstraints()
     }
 }

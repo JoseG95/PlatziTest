@@ -52,6 +52,3 @@ private extension PopularMoviesViewModel {
         return PopularMoviesCellViewModel(movie: movie)
     }
 }
-
-
-
