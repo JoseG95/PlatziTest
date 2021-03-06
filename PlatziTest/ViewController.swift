@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     
     let popularMoviesTableView = UITableView()
     
-    var characters = ["Movie1", "Movie2", "Movie3", "Movie4"]
+    var movies = ["Movie1", "Movie2", "Movie3", "Movie4"]
 
 
     override func viewDidLoad() {
@@ -27,12 +27,12 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        characters.count
+        movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "popularMovieCell", for: indexPath)
-        cell.textLabel?.text = characters[indexPath.row]
+        cell.textLabel?.text = movies[indexPath.row]
         return cell
     }
 }
