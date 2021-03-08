@@ -41,7 +41,7 @@ class PopularMoviesViewController: UIViewController {
         return label
     }()
     
-    lazy var viewModel: PopularMoviesViewModel = {
+    private lazy var viewModel: PopularMoviesViewModel = {
         return PopularMoviesViewModel()
     }()
 
@@ -71,6 +71,13 @@ extension PopularMoviesViewController: UITableViewDataSource, UITableViewDelegat
         let cellViewModel = viewModel.getCellViewModel(at: indexPath)
         cell.configure(with: cellViewModel)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cellViewModel = viewModel.getCellViewModel(at: indexPath)
+        let controller = MovieDetailViewController(with: cellViewModel)
+        controller.modalPresentationStyle = .overFullScreen
+        present(controller, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

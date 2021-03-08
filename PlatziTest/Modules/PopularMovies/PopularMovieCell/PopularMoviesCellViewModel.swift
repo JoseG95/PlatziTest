@@ -11,6 +11,7 @@ class PopularMoviesCellViewModel {
     let title: String
     let releaseDate: String
     let rating: Float
+    let overview: String
     
     private let posterPath: String?
     
@@ -31,6 +32,7 @@ class PopularMoviesCellViewModel {
         self.posterPath = movie.posterPath
         self.rating = Float(movie.voteAverage / 10)
         self.releaseDate = PopularMoviesCellViewModel.formattedReleaseDate(from: movie.releaseDate)
+        self.overview = movie.overview
     }
 }
 
