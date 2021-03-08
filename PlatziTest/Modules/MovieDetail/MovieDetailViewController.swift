@@ -34,7 +34,7 @@ class MovieDetailViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.numberOfLines = 0
         label.font = Fonts.captionOne
         label.textColor = Colors.primaryWhite
@@ -177,14 +177,13 @@ private extension MovieDetailViewController {
             recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 160),
             recommendationsCollectionView.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
             movieImage.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
-            movieImage.topAnchor.constraint(equalTo: recommendationsCollectionView.bottomAnchor, constant: 10),
+            movieImage.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             movieImage.heightAnchor.constraint(equalToConstant: 200),
             movieImage.widthAnchor.constraint(equalToConstant: 135),
-            titleLabel.topAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: 5),
-            titleLabel.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 50),
-            titleLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -50),
-            releaseDateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 2),
+            titleLabel.topAnchor.constraint(equalTo: recommendationsCollectionView.bottomAnchor, constant: 15),
+            titleLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            releaseDateLabel.topAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: 2),
             releaseDateLabel.widthAnchor.constraint(equalTo: view.widthAnchor),
             overviewTitleLabel.topAnchor.constraint(equalTo: releaseDateLabel.bottomAnchor, constant: 5),
             overviewTitleLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 15),

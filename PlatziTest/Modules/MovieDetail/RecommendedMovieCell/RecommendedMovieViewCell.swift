@@ -32,6 +32,10 @@ class RecommendedMovieViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        movieImage.image = nil
+    }
+    
     func configure(with viewModel: RecommendedMovieCellViewModel) {
         self.viewModel = viewModel
         self.viewModel?.onImageFetched = { [weak self] imageData in

@@ -42,7 +42,7 @@ struct Fonts {
 struct Colors {
     static let border: UIColor = UIColor(red: 130/255.0, green: 130/255.0, blue: 130/255.0, alpha: 1.0)
     static let primaryWhite: UIColor = UIColor(red: 205/255.0, green: 205/255.0, blue: 205/255.0, alpha: 1.0)
-    static let backgroundFaded: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.82)
+    static let backgroundFaded: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.85)
     static let lightGray: UIColor = UIColor(red: 64/255.0, green: 64/255.0, blue: 64/255.0, alpha: 1.0)
     static let header: UIColor = UIColor(red: 252/255.0, green: 208/255.0, blue: 82/255.0, alpha: 1.0)
     static let background: UIColor = UIColor(red: 33/255.0, green: 33/255.0, blue: 33/255.0, alpha: 1.0)
