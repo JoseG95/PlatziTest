@@ -17,6 +17,9 @@ struct NetworkServices {
     private static func moviePoster(posterPath: String) -> String {
         return "https://image.tmdb.org/t/p/w200/\(posterPath)"
     }
+    private static func recommendationsFor(_ movieId: Int) -> String {
+        return "\(baseUrl)/\(movieId)/recommendations"
+    }
     
     static func fetchPopularMovies(page: Int, completionHandler: @escaping (MoviesPage) -> Void) {
         guard let url = URL(string: self.popularMovies(page: page)) else { return }
@@ -55,8 +58,32 @@ struct NetworkServices {
                 print("Error with the response, unexpected status code: \(String(describing: response))")
                 return
             }
+            
             if let data = data {
                 completionHandler(data)
+            }
+        }
+        task.resume()
+    }
+    
+    static func fetchRecommendedMovies(for movieId: Int, completionHandler: @escaping ((MoviesPage) -> Void)) {
+        guard let url = URL(string: self.recommendationsFor(movieId)) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error getting movie recommendations: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                print("Error with the response, unexpected status code: \(String(describing: response))")
+                return
+            }
+            
+            if let data = data,
+               let movies = try? JSONDecoder().decode(MoviesPage.self, from: data) {
+                completionHandler(movies)
             }
         }
         task.resume()

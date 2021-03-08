@@ -113,7 +113,7 @@ private extension PopularMoviesViewController {
     }
     
     func viewModelDidLoad() {
-        viewModel.reloadTableViewClosure = { [weak self] () in
+        viewModel.onMoviesFetched = { [weak self] () in
             DispatchQueue.main.async {
                 self?.popularMoviesTableView.reloadData()
             }

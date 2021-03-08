@@ -10,11 +10,11 @@ import Foundation
 class PopularMoviesViewModel {
     private var cellViewModels: [PopularMoviesCellViewModel] = [] {
         didSet {
-            self.reloadTableViewClosure?()
+            self.onMoviesFetched?()
         }
     }
 
-    var reloadTableViewClosure: (() -> Void)?
+    var onMoviesFetched: (() -> Void)?
     
     var movies: [Movie] = []
     
