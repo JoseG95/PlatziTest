@@ -18,7 +18,7 @@ struct NetworkServices {
         return "https://image.tmdb.org/t/p/w200/\(posterPath)"
     }
     private static func recommendationsFor(_ movieId: Int) -> String {
-        return "\(baseUrl)/\(movieId)/recommendations"
+        return "\(baseUrl)/\(movieId)/recommendations?api_key=\(apiKey)"
     }
     
     static func fetchPopularMovies(page: Int, completionHandler: @escaping (MoviesPage) -> Void) {

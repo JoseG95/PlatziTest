@@ -9,9 +9,9 @@ import UIKit
 
 class RecommendedMovieViewCell: UICollectionViewCell {
     static let identifier = "RecommendedMovieViewCell"
+    private var viewModel: RecommendedMovieCellViewModel?
     
     override func layoutSubviews() {
-        backgroundColor = .green
         layer.borderWidth = 2
         layer.borderColor = Colors.border.cgColor
     }
@@ -22,5 +22,13 @@ class RecommendedMovieViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(with viewModel: RecommendedMovieCellViewModel) {
+        self.viewModel = viewModel
+        self.viewModel?.onImageFetched = { [weak self] imageData in
+            guard let self = self else { return }
+            print(imageData)
+        }
     }
 }

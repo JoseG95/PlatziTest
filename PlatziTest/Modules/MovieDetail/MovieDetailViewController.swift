@@ -95,6 +95,7 @@ class MovieDetailViewController: UIViewController {
         recommendationsCollectionView.dataSource = self
         recommendationsCollectionView.delegate = self
         view.backgroundColor = Colors.backgroundFaded
+        viewModelDidLoad()
     }
     
     override func viewDidLayoutSubviews() {
@@ -102,7 +103,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     init(with cellViewModel: PopularMoviesCellViewModel) {
-        self.viewModel = MovieDetailViewModel(cellViewModel)
+        viewModel = MovieDetailViewModel(cellViewModel)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -113,19 +114,34 @@ class MovieDetailViewController: UIViewController {
 
 extension MovieDetailViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        viewModel.numberOfCells
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: RecommendedMovieViewCell.identifier, for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendedMovieViewCell.identifier, for: indexPath) as? RecommendedMovieViewCell else {
+            return UICollectionViewCell()
+        }
+        let cellViewModel = viewModel.getCellViewModel(at: indexPath)
+        cell.configure(with: cellViewModel)
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 150)
+        return CGSize(width: 106, height: 160)
     }
 }
 
 private extension MovieDetailViewController {
+    
+    func viewModelDidLoad() {
+        viewModel.onMoviesFetched = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.recommendationsCollectionView.reloadData()
+            }
+        }
+        viewModel.didLoad()
+    }
     
     @objc
     private func closeVC(_: UIButton!) {
@@ -158,7 +174,7 @@ private extension MovieDetailViewController {
             recommendedMoviesLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
             recommendationsCollectionView.topAnchor.constraint(equalTo: recommendedMoviesLabel.bottomAnchor, constant: 10),
             recommendationsCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 150),
+            recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 160),
             recommendationsCollectionView.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
             movieImage.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
             movieImage.topAnchor.constraint(equalTo: recommendationsCollectionView.bottomAnchor, constant: 10),

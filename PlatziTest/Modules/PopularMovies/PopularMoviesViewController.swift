@@ -113,9 +113,10 @@ private extension PopularMoviesViewController {
     }
     
     func viewModelDidLoad() {
-        viewModel.onMoviesFetched = { [weak self] () in
+        viewModel.onMoviesFetched = { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.async {
-                self?.popularMoviesTableView.reloadData()
+                self.popularMoviesTableView.reloadData()
             }
         }
         viewModel.didLoad()
