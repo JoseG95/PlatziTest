@@ -41,7 +41,7 @@ class PopularMoviesViewController: UIViewController {
         return label
     }()
     
-    private lazy var viewModel: PopularMoviesViewModel = {
+    private lazy var viewModel: PopularMoviesViewModelProtocol = {
         return PopularMoviesViewModel()
     }()
 

@@ -7,27 +7,36 @@
 
 import Foundation
 
+protocol PopularMoviesViewModelProtocol: AnyObject {
+    var totalResults: Int { get }
+    var onMoviesFetched: (([IndexPath]?) -> Void)? { get set }
+    func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModel?
+    func fetchPopularMovies()
+    func didLoad()
+    var numberOfCells: Int { get }
+}
+
 class PopularMoviesViewModel {
     
-    private var cellViewModels: [PopularMoviesCellViewModel] = []
-
     var onMoviesFetched: (([IndexPath]?) -> Void)?
-    
     var numberOfCells: Int {
         return cellViewModels.count
     }
+    private (set) var totalResults: Int = 0
     
-    var totalResults: Int = 0
-    
+    private var cellViewModels: [PopularMoviesCellViewModel] = []
     private var isFetchInProgress: Bool = false
     private var currentPage: Int = 1
     
-    func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModel? {
-        return cellViewModels[safe: indexPath.row]
-    }
-    
+}
+
+extension PopularMoviesViewModel: PopularMoviesViewModelProtocol {
     func didLoad() {
         fetchPopularMovies()
+    }
+    
+    func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModel? {
+        return cellViewModels[safe: indexPath.row]
     }
     
     func fetchPopularMovies() {
