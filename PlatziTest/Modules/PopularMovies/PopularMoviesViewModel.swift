@@ -8,11 +8,10 @@
 import Foundation
 
 class PopularMoviesViewModel {
+    
     private var cellViewModels: [PopularMoviesCellViewModel] = []
 
     var onMoviesFetched: (([IndexPath]?) -> Void)?
-    
-    var movies: [Movie] = []
     
     var numberOfCells: Int {
         return cellViewModels.count
@@ -61,7 +60,6 @@ private extension PopularMoviesViewModel {
     }
     
     func processFetchedMovies(_ movies: [Movie]) {
-        self.movies = movies
         var cellViewModels = [PopularMoviesCellViewModel]()
         for movie in movies {
             cellViewModels.append(viewModelFrom(movie))
