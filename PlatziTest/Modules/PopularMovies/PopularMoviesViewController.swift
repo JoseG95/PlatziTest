@@ -59,22 +59,27 @@ class PopularMoviesViewController: UIViewController {
     }
 }
 
-extension PopularMoviesViewController: UITableViewDataSource, UITableViewDelegate {
+extension PopularMoviesViewController: UITableViewDataSource, UITableViewDelegate, UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfCells
+        viewModel.totalResults
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularMovieTableViewCell.identifier, for: indexPath) as? PopularMovieTableViewCell else {
             return UITableViewCell()
         }
-        let cellViewModel = viewModel.getCellViewModel(at: indexPath)
-        cell.configure(with: cellViewModel)
+        if let cellViewModel = viewModel.getCellViewModel(at: indexPath) {
+            cell.configure(with: cellViewModel)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cellViewModel = viewModel.getCellViewModel(at: indexPath)
+        guard let cellViewModel = viewModel.getCellViewModel(at: indexPath) else { return }
         let controller = MovieDetailViewController(with: cellViewModel)
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)

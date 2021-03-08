@@ -22,8 +22,10 @@ class PopularMoviesViewModel {
         return cellViewModels.count
     }
     
-    func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModel {
-        return cellViewModels[indexPath.row]
+    var totalResults: Int = 0
+    
+    func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModel? {
+        return cellViewModels[safe: indexPath.row]
     }
     
     func didLoad() {
@@ -35,6 +37,7 @@ private extension PopularMoviesViewModel {
     func fetchPopularMovies() {
         NetworkServices.fetchPopularMovies(page: 1) { [weak self] movies in
             guard let self = self else { return }
+            self.totalResults = movies.totalResults
             self.processFetchedMovies(movies.results)
         }
     }
@@ -50,5 +53,11 @@ private extension PopularMoviesViewModel {
     
     func viewModelFrom(_ movie: Movie) -> PopularMoviesCellViewModel {
         return PopularMoviesCellViewModel(movie: movie)
+    }
+}
+
+extension Collection {
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }
