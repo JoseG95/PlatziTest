@@ -10,6 +10,7 @@ import Foundation
 class PopularMoviesCellViewModel {
     let title: String
     let releaseDate: String
+    let rating: Float
     
     private let posterPath: String?
     
@@ -27,12 +28,31 @@ class PopularMoviesCellViewModel {
     
     init(movie: Movie) {
         self.title = movie.title
-        self.releaseDate = movie.releaseDate
         self.posterPath = movie.posterPath
+        self.rating = Float(movie.voteAverage / 10)
+        self.releaseDate = PopularMoviesCellViewModel.formattedReleaseDate(from: movie.releaseDate)
     }
 }
 
 private extension PopularMoviesCellViewModel {
+    
+    static func formattedReleaseDate(from movieDate: String?) -> String {
+        guard let movieDate = movieDate else {
+            return "-"
+        }
+        
+        let currentFormater = DateFormatter()
+        currentFormater.dateFormat = "yyyy-MM-dd"
+        guard let date = currentFormater.date(from: movieDate) else {
+            return "-"
+        }
+        
+        let desiredFormatter = DateFormatter()
+        desiredFormatter.locale = Locale(identifier: "en_US")
+        desiredFormatter.dateFormat = "MMM d, yyy"
+        return desiredFormatter.string(from: date)
+    }
+    
     func fetchImage(posterPath: String?) {
         guard let posterPath = posterPath else { return }
         NetworkServices.getMovieImage(from: posterPath) { [weak self] data in

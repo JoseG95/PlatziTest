@@ -29,7 +29,6 @@ class PopularMovieTableViewCell: UITableViewCell {
     let movieImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
-        image.image = UIImage(systemName: "multiply.circle.fill")
         image.layer.borderWidth = 1.0
         image.layer.borderColor = Colors.border.cgColor
         return image
@@ -38,6 +37,11 @@ class PopularMovieTableViewCell: UITableViewCell {
     let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = Colors.lightGray
+        return view
+    }()
+    
+    let ratingView: RatingView = {
+        let view = RatingView()
         return view
     }()
     
@@ -57,6 +61,7 @@ class PopularMovieTableViewCell: UITableViewCell {
         titleLabel.text = nil
         releaseDateLabel.text = nil
         movieImage.image = nil
+        ratingView.setProgressWithAnimation(duration: 0, value: 0)
     }
     
     func configure(with viewModel: PopularMoviesCellViewModel) {
@@ -68,47 +73,40 @@ class PopularMovieTableViewCell: UITableViewCell {
             }
         }
         titleLabel.text = viewModel.title
-        releaseDateLabel.text = formattedReleaseDate(from: viewModel.releaseDate)
+        releaseDateLabel.text = viewModel.releaseDate
+        DispatchQueue.main.async {
+            self.ratingView.setProgressWithAnimation(value: viewModel.rating)
+        }
     }
 }
 
 private extension PopularMovieTableViewCell {
-    
-    func formattedReleaseDate(from movieDate: String?) -> String {
-        guard let movieDate = movieDate else {
-            return "-"
-        }
-        
-        let currentFormater = DateFormatter()
-        currentFormater.dateFormat = "yyyy-MM-dd"
-        guard let date = currentFormater.date(from: movieDate) else {
-            return "-"
-        }
-        
-        let desiredFormatter = DateFormatter()
-        desiredFormatter.locale = Locale(identifier: "en_US")
-        desiredFormatter.dateFormat = "MMM d, yyy"
-        return desiredFormatter.string(from: date)
-    }
     
     func setupConstraints() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(movieImage)
         contentView.addSubview(releaseDateLabel)
         contentView.addSubview(separatorView)
+        contentView.addSubview(ratingView)
         
         movieImage.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         releaseDateLabel.translatesAutoresizingMaskIntoConstraints = false
         separatorView.translatesAutoresizingMaskIntoConstraints = false
+        ratingView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             movieImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             movieImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
             movieImage.widthAnchor.constraint(equalToConstant: 49),
             movieImage.heightAnchor.constraint(equalToConstant: 73),
+            ratingView.centerYAnchor.constraint(equalTo: movieImage.centerYAnchor),
+            ratingView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            ratingView.widthAnchor.constraint(equalToConstant: 38),
+            ratingView.heightAnchor.constraint(equalTo: ratingView.widthAnchor),
             titleLabel.topAnchor.constraint(equalTo: movieImage.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: 18),
+            titleLabel.trailingAnchor.constraint(equalTo: ratingView.leadingAnchor, constant: 10),
             releaseDateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             releaseDateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             separatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

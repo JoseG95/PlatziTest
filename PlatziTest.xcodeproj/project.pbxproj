@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF97067325F682CB00D0153F /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF97067225F682CB00D0153F /* RatingView.swift */; };
 		BFA4531825F3DD8A00A37CA6 /* PopularMoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA4531725F3DD8A00A37CA6 /* PopularMoviesViewModel.swift */; };
 		BFA4531D25F3E3EF00A37CA6 /* PopularMoviesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA4531C25F3E3EF00A37CA6 /* PopularMoviesCellViewModel.swift */; };
 		BFA4532F25F3EA7B00A37CA6 /* PopularMovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA4532E25F3EA7B00A37CA6 /* PopularMovieTableViewCell.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF97067225F682CB00D0153F /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		BFA4531725F3DD8A00A37CA6 /* PopularMoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesViewModel.swift; sourceTree = "<group>"; };
 		BFA4531C25F3E3EF00A37CA6 /* PopularMoviesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesCellViewModel.swift; sourceTree = "<group>"; };
 		BFA4532E25F3EA7B00A37CA6 /* PopularMovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieTableViewCell.swift; sourceTree = "<group>"; };
@@ -86,6 +88,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF97067125F682BE00D0153F /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				BF97067225F682CB00D0153F /* RatingView.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		BFA4531325F3DCE600A37CA6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +118,7 @@
 		BFA4533325F3F60100A37CA6 /* Utitlities */ = {
 			isa = PBXGroup;
 			children = (
+				BF97067125F682BE00D0153F /* CustomViews */,
 				BFA4533425F3F61200A37CA6 /* Constants.swift */,
 			);
 			path = Utitlities;
@@ -315,6 +326,7 @@
 				BFA4532F25F3EA7B00A37CA6 /* PopularMovieTableViewCell.swift in Sources */,
 				BFE0C55825F327AF00770565 /* NetworkServices.swift in Sources */,
 				BFA4531D25F3E3EF00A37CA6 /* PopularMoviesCellViewModel.swift in Sources */,
+				BF97067325F682CB00D0153F /* RatingView.swift in Sources */,
 				BFE0C54F25F3238E00770565 /* MovieModel.swift in Sources */,
 				BFB6E5BA25F3067500DC5F4F /* PopularMoviesViewController.swift in Sources */,
 				BFB6E5B625F3067500DC5F4F /* AppDelegate.swift in Sources */,
