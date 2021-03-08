@@ -13,7 +13,32 @@ class PopularMoviesViewController: UIViewController {
         let tableView = UITableView()
         tableView.register(PopularMovieTableViewCell.self, forCellReuseIdentifier: PopularMovieTableViewCell.identifier)
         tableView.backgroundColor = Colors.background
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }()
+    
+    private let headerImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Moviebox")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private let headerLabelBackground: UIView = {
+        let view = UIView()
+        view.backgroundColor = Colors.lightGray
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let headerTitle: UILabel = {
+        let label = UILabel()
+        label.text = "Popular Movies"
+        label.font = Fonts.captionTwo
+        label.textColor = Colors.header
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     lazy var viewModel: PopularMoviesViewModel = {
@@ -30,6 +55,7 @@ class PopularMoviesViewController: UIViewController {
     override func loadView() {
         super.loadView()
         setupTableView()
+        setupConstraints()
     }
 }
 
@@ -54,6 +80,31 @@ extension PopularMoviesViewController: UITableViewDataSource, UITableViewDelegat
 
 private extension PopularMoviesViewController {
     
+    func setupConstraints() {
+        view.addSubview(headerImage)
+        view.addSubview(popularMoviesTableView)
+        view.addSubview(headerLabelBackground)
+        view.addSubview(headerTitle)
+        
+        NSLayoutConstraint.activate([
+            headerImage.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
+            headerImage.widthAnchor.constraint(equalToConstant: 155),
+            headerImage.heightAnchor.constraint(equalToConstant: 20),
+            headerImage.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 25),
+            headerLabelBackground.topAnchor.constraint(equalTo: headerImage.bottomAnchor, constant: 25),
+            headerLabelBackground.widthAnchor.constraint(equalTo: view.widthAnchor),
+            headerLabelBackground.heightAnchor.constraint(equalToConstant: 25),
+            headerLabelBackground.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            headerTitle.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            headerTitle.centerYAnchor.constraint(equalTo: headerLabelBackground.centerYAnchor),
+            headerTitle.heightAnchor.constraint(equalTo: headerLabelBackground.heightAnchor),
+            popularMoviesTableView.topAnchor.constraint(equalTo: headerLabelBackground.bottomAnchor),
+            popularMoviesTableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+            popularMoviesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            popularMoviesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+    
     func viewModelDidLoad() {
         viewModel.reloadTableViewClosure = { [weak self] () in
             DispatchQueue.main.async {
@@ -63,21 +114,9 @@ private extension PopularMoviesViewController {
         viewModel.didLoad()
     }
     
-    func setupTableViewConstraints() {
-        view.addSubview(popularMoviesTableView)
-        popularMoviesTableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            popularMoviesTableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-            popularMoviesTableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-            popularMoviesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            popularMoviesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-    }
-    
     func setupTableView() {
         popularMoviesTableView.dataSource = self
         popularMoviesTableView.delegate = self
-        setupTableViewConstraints()
     }
 }
 
