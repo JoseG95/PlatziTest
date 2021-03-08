@@ -11,9 +11,17 @@ class RecommendedMovieViewCell: UICollectionViewCell {
     static let identifier = "RecommendedMovieViewCell"
     private var viewModel: RecommendedMovieCellViewModel?
     
+    private let movieImage: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFit
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
     override func layoutSubviews() {
         layer.borderWidth = 2
         layer.borderColor = Colors.border.cgColor
+        setupConstraints()
     }
     
     override init(frame: CGRect) {
@@ -28,7 +36,22 @@ class RecommendedMovieViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         self.viewModel?.onImageFetched = { [weak self] imageData in
             guard let self = self else { return }
-            print(imageData)
+            DispatchQueue.main.async {
+                self.movieImage.image = UIImage(data: imageData)
+            }
         }
+    }
+}
+
+private extension RecommendedMovieViewCell {
+    func setupConstraints() {
+        contentView.addSubview(movieImage)
+        
+        NSLayoutConstraint.activate([
+            movieImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            movieImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            movieImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            movieImage.heightAnchor.constraint(equalTo: contentView.heightAnchor)
+        ])
     }
 }
