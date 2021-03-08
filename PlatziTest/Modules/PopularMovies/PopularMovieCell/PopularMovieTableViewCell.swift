@@ -9,7 +9,7 @@ import UIKit
 
 class PopularMovieTableViewCell: UITableViewCell {
     static let identifier = "PopularMovieTableViewCell"
-    private var viewModel: PopularMoviesCellViewModel?
+    private weak var viewModel: PopularMoviesCellViewModelProtocol?
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -68,7 +68,7 @@ class PopularMovieTableViewCell: UITableViewCell {
         ratingView.setProgressWithAnimation(duration: 0, value: 0)
     }
     
-    func configure(with viewModel: PopularMoviesCellViewModel) {
+    func configure(with viewModel: PopularMoviesCellViewModelProtocol) {
         self.viewModel = viewModel
         self.viewModel?.onImageFetched = { [weak self] imageData in
             guard let self = self else { return }

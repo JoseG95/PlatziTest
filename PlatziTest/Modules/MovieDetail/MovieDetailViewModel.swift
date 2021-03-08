@@ -35,7 +35,7 @@ class MovieDetailViewModel {
     
     var onMoviesFetched: (() -> Void)?
     
-    init(_ movieCellViewModel: PopularMoviesCellViewModel) {
+    init(_ movieCellViewModel: PopularMoviesCellViewModelProtocol) {
         self.title = movieCellViewModel.title
         self.overview = movieCellViewModel.overview
         self.releaseDate = movieCellViewModel.releaseDate
