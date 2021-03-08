@@ -11,6 +11,18 @@ class MovieDetailViewController: UIViewController {
     
     private var viewModel: MovieDetailViewModel
     
+    private let recommendationsCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        let collection = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
+        collection.register(RecommendedMovieViewCell.self, forCellWithReuseIdentifier: RecommendedMovieViewCell.identifier)
+        collection.backgroundColor = .clear
+        collection.showsHorizontalScrollIndicator = false
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        return collection
+    }()
+    
     private let movieImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
@@ -61,6 +73,15 @@ class MovieDetailViewController: UIViewController {
         return textView
     }()
     
+    private let recommendedMoviesLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Recommended movies"
+        label.font = Fonts.captionOne
+        label.textColor = Colors.primaryWhite
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private let closeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "cancel"), for: .normal)
@@ -71,6 +92,8 @@ class MovieDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        recommendationsCollectionView.dataSource = self
+        recommendationsCollectionView.delegate = self
         view.backgroundColor = Colors.backgroundFaded
     }
     
@@ -88,6 +111,20 @@ class MovieDetailViewController: UIViewController {
     }
 }
 
+extension MovieDetailViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return collectionView.dequeueReusableCell(withReuseIdentifier: RecommendedMovieViewCell.identifier, for: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 150)
+    }
+}
+
 private extension MovieDetailViewController {
     
     @objc
@@ -100,21 +137,31 @@ private extension MovieDetailViewController {
         titleLabel.text = viewModel.title
         releaseDateLabel.text = viewModel.releaseDate
         overviewTextView.text = viewModel.overview
-        
+        addSubviews()
         setupConstraints()
     }
     
-    func setupConstraints() {
+    func addSubviews() {
         view.addSubview(movieImage)
         view.addSubview(titleLabel)
         view.addSubview(releaseDateLabel)
         view.addSubview(overviewTitleLabel)
         view.addSubview(overviewTextView)
         view.addSubview(closeButton)
-        
+        view.addSubview(recommendationsCollectionView)
+        view.addSubview(recommendedMoviesLabel)
+    }
+    
+    func setupConstraints() {
         NSLayoutConstraint.activate([
+            recommendedMoviesLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor),
+            recommendedMoviesLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            recommendationsCollectionView.topAnchor.constraint(equalTo: recommendedMoviesLabel.bottomAnchor, constant: 10),
+            recommendationsCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            recommendationsCollectionView.heightAnchor.constraint(equalToConstant: 150),
+            recommendationsCollectionView.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
             movieImage.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
-            movieImage.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 50),
+            movieImage.topAnchor.constraint(equalTo: recommendationsCollectionView.bottomAnchor, constant: 10),
             movieImage.heightAnchor.constraint(equalToConstant: 200),
             movieImage.widthAnchor.constraint(equalToConstant: 135),
             titleLabel.topAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: 5),
