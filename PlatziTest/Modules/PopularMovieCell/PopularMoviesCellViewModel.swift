@@ -9,8 +9,10 @@ import Foundation
 
 struct PopularMoviesCellViewModel {
     let title: String
+    let releaseDate: String
     
     init(movie: Movie) {
         self.title = movie.title
+        self.releaseDate = movie.releaseDate
     }
 }

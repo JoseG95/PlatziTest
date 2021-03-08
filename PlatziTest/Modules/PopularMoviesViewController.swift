@@ -69,8 +69,8 @@ private extension PopularMoviesViewController {
         NSLayoutConstraint.activate([
             popularMoviesTableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             popularMoviesTableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-            popularMoviesTableView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            popularMoviesTableView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor)
+            popularMoviesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            popularMoviesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
