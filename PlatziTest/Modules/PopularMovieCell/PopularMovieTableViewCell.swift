@@ -9,6 +9,7 @@ import UIKit
 
 class PopularMovieTableViewCell: UITableViewCell {
     static let identifier = "PopularMovieTableViewCell"
+    private var viewModel: PopularMoviesCellViewModel?
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -59,6 +60,13 @@ class PopularMovieTableViewCell: UITableViewCell {
     }
     
     func configure(with viewModel: PopularMoviesCellViewModel) {
+        self.viewModel = viewModel
+        self.viewModel?.onImageFetched = { [weak self] imageData in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.movieImage.image = UIImage(data: imageData)
+            }
+        }
         titleLabel.text = viewModel.title
         releaseDateLabel.text = formattedReleaseDate(from: viewModel.releaseDate)
     }
