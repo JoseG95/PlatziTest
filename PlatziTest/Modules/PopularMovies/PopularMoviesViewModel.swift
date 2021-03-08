@@ -8,13 +8,9 @@
 import Foundation
 
 class PopularMoviesViewModel {
-    private var cellViewModels: [PopularMoviesCellViewModel] = [] {
-        didSet {
-            self.onMoviesFetched?()
-        }
-    }
+    private var cellViewModels: [PopularMoviesCellViewModel] = []
 
-    var onMoviesFetched: (() -> Void)?
+    var onMoviesFetched: (([IndexPath]?) -> Void)?
     
     var movies: [Movie] = []
     
@@ -24,6 +20,9 @@ class PopularMoviesViewModel {
     
     var totalResults: Int = 0
     
+    private var isFetchInProgress: Bool = false
+    private var currentPage: Int = 1
+    
     func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModel? {
         return cellViewModels[safe: indexPath.row]
     }
@@ -31,15 +30,34 @@ class PopularMoviesViewModel {
     func didLoad() {
         fetchPopularMovies()
     }
+    
+    func fetchPopularMovies() {
+        guard !isFetchInProgress else { return }
+        
+        defer { isFetchInProgress = false }
+        
+        isFetchInProgress = true
+        
+        NetworkServices.fetchPopularMovies(page: currentPage) { [weak self] movies in
+            guard let self = self else { return }
+            self.totalResults = movies.totalResults
+            for movie in movies.results {
+                self.cellViewModels.append(self.viewModelFrom(movie))
+            }
+            
+            let indexPathsToReload: [IndexPath]? = self.currentPage == 1 ? .none : self.calculateIndexPathsToReload(from: movies.results)
+            self.currentPage += 1
+            self.onMoviesFetched?(indexPathsToReload)
+        }
+    }
 }
 
 private extension PopularMoviesViewModel {
-    func fetchPopularMovies() {
-        NetworkServices.fetchPopularMovies(page: 1) { [weak self] movies in
-            guard let self = self else { return }
-            self.totalResults = movies.totalResults
-            self.processFetchedMovies(movies.results)
-        }
+    
+    func calculateIndexPathsToReload(from newMovies: [Movie]) -> [IndexPath] {
+      let startIndex = cellViewModels.count - newMovies.count
+      let endIndex = startIndex + newMovies.count
+      return (startIndex ..< endIndex).map { IndexPath(row: $0, section: 0) }
     }
     
     func processFetchedMovies(_ movies: [Movie]) {

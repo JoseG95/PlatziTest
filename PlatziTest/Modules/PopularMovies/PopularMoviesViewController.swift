@@ -61,7 +61,9 @@ class PopularMoviesViewController: UIViewController {
 
 extension PopularMoviesViewController: UITableViewDataSource, UITableViewDelegate, UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        
+        if indexPaths.contains(where: isLoadingCell) {
+            viewModel.fetchPopularMovies()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -118,10 +120,19 @@ private extension PopularMoviesViewController {
     }
     
     func viewModelDidLoad() {
-        viewModel.onMoviesFetched = { [weak self] in
+        viewModel.onMoviesFetched = { [weak self] indexPaths in
+            guard let indexPaths = indexPaths else {
+                DispatchQueue.main.async { [weak self] in
+                    self?.popularMoviesTableView.reloadData()
+                }
+                return
+            }
+            
             guard let self = self else { return }
+
             DispatchQueue.main.async {
-                self.popularMoviesTableView.reloadData()
+                let indexPathsToReload = self.visibleIndexPathsToReload(intersecting: indexPaths)
+                self.popularMoviesTableView.reloadRows(at: indexPathsToReload, with: .automatic)
             }
         }
         viewModel.didLoad()
@@ -130,6 +141,18 @@ private extension PopularMoviesViewController {
     func setupTableView() {
         popularMoviesTableView.dataSource = self
         popularMoviesTableView.delegate = self
+        popularMoviesTableView.prefetchDataSource = self
+    }
+    
+    
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.row >= viewModel.numberOfCells
+    }
+    
+    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+        let indexPathsForVisibleRows = popularMoviesTableView.indexPathsForVisibleRows ?? []
+        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+        return Array(indexPathsIntersection)
     }
 }
 
