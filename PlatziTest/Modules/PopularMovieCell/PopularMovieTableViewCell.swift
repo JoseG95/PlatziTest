@@ -11,37 +11,41 @@ class PopularMovieTableViewCell: UITableViewCell {
     static let identifier = "PopularMovieTableViewCell"
     private var viewModel: PopularMoviesCellViewModel?
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = Colors.primaryWhite
         label.font = Fonts.bodyOne
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let releaseDateLabel: UILabel = {
+    private let releaseDateLabel: UILabel = {
         let label = UILabel()
         label.textColor = Colors.primaryWhite
         label.font = Fonts.captionTwo
-        label.text = "sdkfasldkjd sflksdf"
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let movieImage: UIImageView = {
+    private let movieImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         image.layer.borderWidth = 1.0
         image.layer.borderColor = Colors.border.cgColor
+        image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
-    let separatorView: UIView = {
+    private let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = Colors.lightGray
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let ratingView: RatingView = {
+    private let ratingView: RatingView = {
         let view = RatingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -88,12 +92,6 @@ private extension PopularMovieTableViewCell {
         contentView.addSubview(releaseDateLabel)
         contentView.addSubview(separatorView)
         contentView.addSubview(ratingView)
-        
-        movieImage.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        releaseDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        separatorView.translatesAutoresizingMaskIntoConstraints = false
-        ratingView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             movieImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
