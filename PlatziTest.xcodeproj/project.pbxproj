@@ -186,10 +186,10 @@
 		BFB6E5B425F3067500DC5F4F /* PlatziTest */ = {
 			isa = PBXGroup;
 			children = (
-				BFA4533325F3F60100A37CA6 /* Utitlities */,
 				BFA4531325F3DCE600A37CA6 /* Modules */,
-				BFE0C55625F3262800770565 /* Networking */,
 				BFE0C54D25F3237F00770565 /* Model */,
+				BFE0C55625F3262800770565 /* Networking */,
+				BFA4533325F3F60100A37CA6 /* Utitlities */,
 				BFB6E5B525F3067500DC5F4F /* AppDelegate.swift */,
 				BFB6E5B725F3067500DC5F4F /* SceneDelegate.swift */,
 				BFB6E5BE25F3067600DC5F4F /* Assets.xcassets */,
