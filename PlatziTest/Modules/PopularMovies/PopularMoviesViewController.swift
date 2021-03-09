@@ -7,8 +7,7 @@
 
 import UIKit
 
-class PopularMoviesViewController: UIViewController {
-    
+final class PopularMoviesViewController: UIViewController {
     private let popularMoviesTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(PopularMovieTableViewCell.self, forCellReuseIdentifier: PopularMovieTableViewCell.identifier)
@@ -93,7 +92,6 @@ extension PopularMoviesViewController: UITableViewDataSource, UITableViewDelegat
 }
 
 private extension PopularMoviesViewController {
-    
     func setupConstraints() {
         view.addSubview(headerImage)
         view.addSubview(popularMoviesTableView)
@@ -144,7 +142,6 @@ private extension PopularMoviesViewController {
         popularMoviesTableView.prefetchDataSource = self
     }
     
-    
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
         return indexPath.row >= viewModel.numberOfCells
     }
@@ -155,4 +152,3 @@ private extension PopularMoviesViewController {
         return Array(indexPathsIntersection)
     }
 }
-

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecommendedMovieViewCell: UICollectionViewCell {
+final class RecommendedMovieViewCell: UICollectionViewCell {
     static let identifier = "RecommendedMovieViewCell"
     private weak var viewModel: RecommendedMovieCellViewModelProtocol?
     

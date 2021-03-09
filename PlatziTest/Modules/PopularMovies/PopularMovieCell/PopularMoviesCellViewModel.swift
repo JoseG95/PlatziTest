@@ -51,7 +51,6 @@ class PopularMoviesCellViewModel {
 extension PopularMoviesCellViewModel: PopularMoviesCellViewModelProtocol {}
 
 private extension PopularMoviesCellViewModel {
-    
     static func formattedReleaseDate(from movieDate: String?) -> String {
         guard let movieDate = movieDate else {
             return "-"

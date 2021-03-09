@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MovieDetailViewController: UIViewController {
+final class MovieDetailViewController: UIViewController {
     
     private var viewModel: MovieDetailViewModelProtocol
     
@@ -132,7 +132,6 @@ extension MovieDetailViewController: UICollectionViewDataSource, UICollectionVie
 }
 
 private extension MovieDetailViewController {
-    
     func viewModelDidLoad() {
         viewModel.onMoviesFetched = { [weak self] in
             guard let self = self else { return }

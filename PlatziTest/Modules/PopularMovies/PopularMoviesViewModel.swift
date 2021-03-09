@@ -17,7 +17,6 @@ protocol PopularMoviesViewModelProtocol: AnyObject {
 }
 
 class PopularMoviesViewModel {
-    
     var onMoviesFetched: (([IndexPath]?) -> Void)?
     var numberOfCells: Int {
         return cellViewModels.count
@@ -27,7 +26,6 @@ class PopularMoviesViewModel {
     private var cellViewModels: [PopularMoviesCellViewModelProtocol] = []
     private var isFetchInProgress: Bool = false
     private var currentPage: Int = 1
-    
 }
 
 extension PopularMoviesViewModel: PopularMoviesViewModelProtocol {
@@ -61,7 +59,6 @@ extension PopularMoviesViewModel: PopularMoviesViewModelProtocol {
 }
 
 private extension PopularMoviesViewModel {
-    
     func calculateIndexPathsToReload(from newMovies: [Movie]) -> [IndexPath] {
       let startIndex = cellViewModels.count - newMovies.count
       let endIndex = startIndex + newMovies.count

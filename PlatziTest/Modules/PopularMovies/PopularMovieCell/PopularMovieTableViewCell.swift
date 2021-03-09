@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PopularMovieTableViewCell: UITableViewCell {
+final class PopularMovieTableViewCell: UITableViewCell {
     static let identifier = "PopularMovieTableViewCell"
     private weak var viewModel: PopularMoviesCellViewModelProtocol?
     
@@ -85,7 +85,6 @@ class PopularMovieTableViewCell: UITableViewCell {
 }
 
 private extension PopularMovieTableViewCell {
-    
     func setupConstraints() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(movieImage)
