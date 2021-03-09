@@ -9,7 +9,7 @@ import UIKit
 
 class MovieDetailViewController: UIViewController {
     
-    private var viewModel: MovieDetailViewModel
+    private var viewModel: MovieDetailViewModelProtocol
     
     private let recommendationsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -102,7 +102,7 @@ class MovieDetailViewController: UIViewController {
         setupUI()
     }
     
-    init(with cellViewModel: PopularMoviesCellViewModel) {
+    init(with cellViewModel: PopularMoviesCellViewModelProtocol) {
         viewModel = MovieDetailViewModel(cellViewModel)
         super.init(nibName: nil, bundle: nil)
     }

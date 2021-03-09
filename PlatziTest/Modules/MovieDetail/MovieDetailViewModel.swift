@@ -7,13 +7,25 @@
 
 import Foundation
 
+protocol MovieDetailViewModelProtocol {
+    var numberOfCells: Int { get }
+    var onMoviesFetched: (() -> Void)? { get set }
+    var imageData: Data { get }
+    var title: String { get }
+    var releaseDate: String { get }
+    var overview: String { get }
+    func getCellViewModel( at indexPath: IndexPath ) -> RecommendedMovieCellViewModel
+    func didLoad()
+}
+
 class MovieDetailViewModel {
     
-    let title: String
-    let overview: String
-    let releaseDate: String
-    let imageData: Data
-    let id: Int
+    private (set) var title: String
+    private (set) var overview: String
+    private (set) var releaseDate: String
+    private (set) var imageData: Data
+    
+    private let id: Int
     
     private var cellViewModels: [RecommendedMovieCellViewModel] = [] {
         didSet {
@@ -25,14 +37,6 @@ class MovieDetailViewModel {
         return cellViewModels.count
     }
     
-    func didLoad() {
-        fetchRecommendedMovies()
-    }
-    
-    func getCellViewModel( at indexPath: IndexPath ) -> RecommendedMovieCellViewModel {
-        return cellViewModels[indexPath.row]
-    }
-    
     var onMoviesFetched: (() -> Void)?
     
     init(_ movieCellViewModel: PopularMoviesCellViewModelProtocol) {
@@ -41,6 +45,16 @@ class MovieDetailViewModel {
         self.releaseDate = movieCellViewModel.releaseDate
         self.imageData = movieCellViewModel.imageData
         self.id = movieCellViewModel.id
+    }
+}
+
+extension MovieDetailViewModel: MovieDetailViewModelProtocol {
+    func didLoad() {
+        fetchRecommendedMovies()
+    }
+    
+    func getCellViewModel( at indexPath: IndexPath ) -> RecommendedMovieCellViewModel {
+        return cellViewModels[indexPath.row]
     }
 }
 
