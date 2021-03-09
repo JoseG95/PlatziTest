@@ -9,7 +9,7 @@ import UIKit
 
 class RecommendedMovieViewCell: UICollectionViewCell {
     static let identifier = "RecommendedMovieViewCell"
-    private var viewModel: RecommendedMovieCellViewModel?
+    private weak var viewModel: RecommendedMovieCellViewModelProtocol?
     
     private let movieImage: UIImageView = {
         let image = UIImageView()
@@ -36,7 +36,7 @@ class RecommendedMovieViewCell: UICollectionViewCell {
         movieImage.image = nil
     }
     
-    func configure(with viewModel: RecommendedMovieCellViewModel) {
+    func configure(with viewModel: RecommendedMovieCellViewModelProtocol) {
         self.viewModel = viewModel
         self.viewModel?.onImageFetched = { [weak self] imageData in
             guard let self = self else { return }

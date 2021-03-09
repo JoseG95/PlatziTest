@@ -7,10 +7,14 @@
 
 import Foundation
 
+protocol RecommendedMovieCellViewModelProtocol: AnyObject {
+    var onImageFetched: ((Data) -> (Void))? { get set }
+}
+
 class RecommendedMovieCellViewModel {
-    let posterPath: String
+    private let posterPath: String
     
-    var imageData: Data = Data() {
+    private var imageData: Data = Data() {
         didSet {
             onImageFetched?(imageData)
         }
@@ -26,6 +30,8 @@ class RecommendedMovieCellViewModel {
         self.posterPath = posterPath
     }
 }
+
+extension RecommendedMovieCellViewModel: RecommendedMovieCellViewModelProtocol {}
 
 private extension RecommendedMovieCellViewModel {
     func fetchImage(posterPath: String?) {

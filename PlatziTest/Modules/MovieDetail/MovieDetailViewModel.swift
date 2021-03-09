@@ -14,7 +14,7 @@ protocol MovieDetailViewModelProtocol {
     var title: String { get }
     var releaseDate: String { get }
     var overview: String { get }
-    func getCellViewModel( at indexPath: IndexPath ) -> RecommendedMovieCellViewModel
+    func getCellViewModel( at indexPath: IndexPath ) -> RecommendedMovieCellViewModelProtocol
     func didLoad()
 }
 
@@ -27,7 +27,7 @@ class MovieDetailViewModel {
     
     private let id: Int
     
-    private var cellViewModels: [RecommendedMovieCellViewModel] = [] {
+    private var cellViewModels: [RecommendedMovieCellViewModelProtocol] = [] {
         didSet {
             self.onMoviesFetched?()
         }
@@ -53,7 +53,7 @@ extension MovieDetailViewModel: MovieDetailViewModelProtocol {
         fetchRecommendedMovies()
     }
     
-    func getCellViewModel( at indexPath: IndexPath ) -> RecommendedMovieCellViewModel {
+    func getCellViewModel( at indexPath: IndexPath ) -> RecommendedMovieCellViewModelProtocol {
         return cellViewModels[indexPath.row]
     }
 }
@@ -67,7 +67,7 @@ private extension MovieDetailViewModel {
     }
     
     func processRecommendedMovies(_ movies: [Movie]) {
-        var cellViewModels = [RecommendedMovieCellViewModel]()
+        var cellViewModels = [RecommendedMovieCellViewModelProtocol]()
         for movie in movies {
             if let viewModel = viewModelFrom(movie.posterPath) {
             cellViewModels.append(viewModel)
@@ -76,7 +76,7 @@ private extension MovieDetailViewModel {
         self.cellViewModels = cellViewModels
     }
     
-    func viewModelFrom(_ posterPath: String?) -> RecommendedMovieCellViewModel? {
+    func viewModelFrom(_ posterPath: String?) -> RecommendedMovieCellViewModelProtocol? {
         guard let posterPath = posterPath else { return nil}
         return RecommendedMovieCellViewModel(posterPath: posterPath)
     }

@@ -10,7 +10,7 @@ import Foundation
 protocol PopularMoviesViewModelProtocol: AnyObject {
     var totalResults: Int { get }
     var onMoviesFetched: (([IndexPath]?) -> Void)? { get set }
-    func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModel?
+    func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModelProtocol?
     func fetchPopularMovies()
     func didLoad()
     var numberOfCells: Int { get }
@@ -24,7 +24,7 @@ class PopularMoviesViewModel {
     }
     private (set) var totalResults: Int = 0
     
-    private var cellViewModels: [PopularMoviesCellViewModel] = []
+    private var cellViewModels: [PopularMoviesCellViewModelProtocol] = []
     private var isFetchInProgress: Bool = false
     private var currentPage: Int = 1
     
@@ -35,7 +35,7 @@ extension PopularMoviesViewModel: PopularMoviesViewModelProtocol {
         fetchPopularMovies()
     }
     
-    func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModel? {
+    func getCellViewModel( at indexPath: IndexPath ) -> PopularMoviesCellViewModelProtocol? {
         return cellViewModels[safe: indexPath.row]
     }
     
@@ -69,14 +69,14 @@ private extension PopularMoviesViewModel {
     }
     
     func processFetchedMovies(_ movies: [Movie]) {
-        var cellViewModels = [PopularMoviesCellViewModel]()
+        var cellViewModels = [PopularMoviesCellViewModelProtocol]()
         for movie in movies {
             cellViewModels.append(viewModelFrom(movie))
         }
         self.cellViewModels = cellViewModels
     }
     
-    func viewModelFrom(_ movie: Movie) -> PopularMoviesCellViewModel {
+    func viewModelFrom(_ movie: Movie) -> PopularMoviesCellViewModelProtocol {
         return PopularMoviesCellViewModel(movie: movie)
     }
 }

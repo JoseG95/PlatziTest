@@ -71,7 +71,7 @@ extension ImageCache: ImageCacheProtocol {
         lock.lock()
         defer { lock.unlock() }
         
-        imageCache.setObject(image as AnyObject, forKey: posterPath as AnyObject)
+        imageCache.setObject(image as AnyObject, forKey: posterPath as AnyObject, cost: image.count)
     }
 
     func removeImage(for posterPath: String) {
